@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class GameProtoNro1 extends Canvas implements Runnable {
 
@@ -11,12 +12,16 @@ public class GameProtoNro1 extends Canvas implements Runnable {
     private boolean running = false;
     private Thread thread;
     private Handler handler;
+    private Random r;
 
     public GameProtoNro1() {
         handler = new Handler();
         new Window(WIDTH, HEIGHT, "Game", this);
 
-        handler.addObject(new Cars(0, HEIGHT / 2, ID.Car, handler));
+        r = new Random();
+        for (int i = 0; i < 20; i++) {
+            handler.addObject(new Cars(r.nextInt(WIDTH) , i * 30 , ID.Car, handler, r.nextInt(10) + 1, 0));
+        }
     }
 
     public synchronized void start() {
